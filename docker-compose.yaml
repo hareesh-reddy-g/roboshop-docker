@@ -9,7 +9,7 @@ services:
     - mongodb
   mongodb:
     build:
-    context: ./mongodb
+      context: ./mongodb
     image: hareeshreddygundlapalli/mongodb:v1
     container_name: mongodb
     volumes:
@@ -20,6 +20,8 @@ services:
     volumes:
     - redis:/data
   mysql:
+    build:
+      context: ./mysql
     image: hareeshreddygundlapalli/mysql:v1
     container_name: mysql
     volumes:
@@ -33,24 +35,32 @@ services:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123 
   user:
+    build:
+      context: ./user
     image: hareeshreddygundlapalli/user:v1
     container_name: user
     depends_on:
     - mongodb
     - redis
   cart:
+    build:
+      context: ./cart
     image: hareeshreddygundlapalli/cart:v1
     container_name: cart
     depends_on:
     - redis
     - catalogue
   shipping:
+    build:
+      context: ./shipping
     image: hareeshreddygundlapalli/shipping:v1
     container_name: shipping
     depends_on:
     - mysql
     - cart
   payment:
+    build:
+      context: ./payment
     image: hareeshreddygundlapalli/payment:v1
     container_name: payment
     depends_on:
@@ -58,6 +68,8 @@ services:
     - cart
     - user
   frontend:
+    build:
+      context: ./frontend
     image: hareeshreddygundlapalli/frontend:v1
     container_name: frontend
     ports:
